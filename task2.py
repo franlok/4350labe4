@@ -2,7 +2,7 @@
 # pylint: disable=missing-function-docstring
 
 import json
-import netifaces  # ✅ Explicit import to avoid wildcard
+import netifaces  # pylint: disable=c-extension-no-member  # ✅ Disable C-extension warning
 from netaddr import IPAddress
 
 def get_ip_addresses():
@@ -10,10 +10,12 @@ def get_ip_addresses():
     Get a dictionary mapping network interface names to a list of their IPv4 addresses.
     """
     interface_to_ip = {}
-    interface_list = netifaces.interfaces()  # ✅ Correct reference
+    interface_list = netifaces.interfaces()  # pylint: disable=c-extension-no-member
 
-    # Get addresses, netmask, etc. information
-    address_entries = [netifaces.ifaddresses(iface) for iface in interface_list]  # ✅ Correct reference
+    # Break long line for pylint compliance (C0301)
+    address_entries = [
+        netifaces.ifaddresses(iface) for iface in interface_list  # pylint: disable=c-extension-no-member
+    ]
 
     # map the interface name to IP address
     for key, value in zip(interface_list, address_entries):
@@ -23,7 +25,7 @@ def get_ip_addresses():
     ipv4_address_entries = {}
     for interface, address in interface_to_ip.items():
         # extract the interface_to_ip
-        if netifaces.AF_INET in address:  # ✅ Correct reference
+        if netifaces.AF_INET in address:  # pylint: disable=c-extension-no-member
             ipv4_address_entries[interface] = interface_to_ip[interface][netifaces.AF_INET]
     return ipv4_address_entries
 
