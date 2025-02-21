@@ -26,4 +26,4 @@ jobs:
 
     - name: Run static analysis
       run: |
-        pylint --extension-pkg-allow-list=netifaces task2.py  # ✅ Allow C-extensions in CI
+        pylint --extension-pkg-allow-list=netifaces task2.py
