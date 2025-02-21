@@ -14,8 +14,8 @@ def get_ip_addresses():
 
     # Break long line for pylint compliance (C0301)
     address_entries = [
-        netifaces.ifaddresses(iface) for iface in interface_list  # pylint: disable=c-extension-no-member
-    ]
+    netifaces.ifaddresses(iface) for iface in interface_list
+]
 
     # map the interface name to IP address
     for key, value in zip(interface_list, address_entries):
